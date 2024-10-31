@@ -1,35 +1,43 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import HomeView from '../views/HomeView.vue'
+import { useAuthStore } from '../stores/authStore'
+import AppDashboard from '../views/AppDashboard.vue' // Asegúrate de importar la vista AppDashboard
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/login',
-      name: 'Login',
-      component: () => import('../components/AppLogin.vue')
-    },
-    {
-      path: '/home',
+      path: '/',
       name: 'home',
-      component: () => import('../components/Home.vue')
+      component: HomeView,
     },
     {
-      path: '/categorias',
-      name: 'categorias',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../components/Categorias.vue')
+      path: '/login',
+      name: 'login',
+      component: () => import('../views/AppLogin.vue'),
     },
     {
-      path: '/productos',
-      name: 'productos',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../components/Productos.vue')
-    }
-  ]
+      path: '/dashboard',
+      name: 'dashboard', // Agrega un nombre a esta ruta para facilitar la navegación
+      component: AppDashboard,
+    },
+  ],
+})
+
+// Agrega el guard de navegación
+router.beforeEach(async to => {
+  const authStore = useAuthStore()
+
+  // Si el usuario no está autenticado y no está yendo a la página de login, redirige al login
+  if (!authStore.user && to.name !== 'login') {
+    return { name: 'login' }
+  }
+
+   // Si el usuario está autenticado y está intentando acceder a la página de login, redirige al dashboard
+   if (authStore.user && to.name === 'login') {
+    return { name: 'dashboard' }; // Cambia esto según tus necesidades
+  }
+
 })
 
 export default router
