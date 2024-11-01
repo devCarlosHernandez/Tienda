@@ -2,13 +2,9 @@
   <div class="container mt-4">
     <h1 class="text-center">Lista de Proveedores</h1>
     <div class="d-flex justify-content-end mb-3">
-      <button
-        type="button"
-        class="btn btn-outline-success"
-        @click="agregarProveedor"
-      >
+      <router-link to="/agregar-proveedor" class="btn btn-outline-success">
         Agregar Proveedor
-      </button>
+      </router-link>
     </div>
     <table class="table table-striped">
       <thead>
@@ -72,7 +68,7 @@ export default {
       }
     },
     agregarProveedor() {
-      // Lógica para agregar un nuevo proveedor
+      this.$router.push('/agregar-proveedor') // Redirigir al formulario de agregar proveedor
     },
     // eslint-disable-next-line no-unused-vars
     editarProveedor(id) {

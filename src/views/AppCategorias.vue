@@ -2,13 +2,9 @@
   <div class="container mt-4">
     <h1 class="text-center">Lista de Categorías</h1>
     <div class="d-flex justify-content-end mb-3">
-      <button
-        type="button"
-        class="btn btn-outline-success"
-        @click="agregarCategoria"
-      >
+      <router-link to="/agregar-categoria" class="btn btn-outline-success">
         Agregar categoría
-      </button>
+      </router-link>
     </div>
     <table class="table table-striped">
       <thead>
@@ -37,7 +33,8 @@
           </td>
         </tr>
       </tbody>
-    </table><br><br>
+    </table>
+    <br /><br />
   </div>
 </template>
 

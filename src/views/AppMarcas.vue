@@ -2,13 +2,9 @@
   <div class="container mt-4">
     <h1 class="text-center">Lista de Marcas</h1>
     <div class="d-flex justify-content-end mb-3">
-      <button
-        type="button"
-        class="btn btn-outline-success"
-        @click="agregarMarca"
-      >
+      <router-link to="/agregar-marca" class="btn btn-outline-success">
         Agregar Marca
-      </button>
+      </router-link>
     </div>
     <table class="table table-striped">
       <thead>
@@ -60,9 +56,6 @@ export default {
       } catch (error) {
         console.error('Error al obtener marcas:', error)
       }
-    },
-    agregarMarca() {
-      // Lógica para agregar una nueva marca
     },
     // eslint-disable-next-line no-unused-vars
     editarMarca(id) {
