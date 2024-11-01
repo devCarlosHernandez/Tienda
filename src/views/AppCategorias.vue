@@ -1,88 +1,69 @@
 <template>
-  <div class="container mt-5">
-    <h2 class="text-center mb-4">Categorias</h2>
-    <div class="d-flex justify-content-end">
-      <button type="button" class="btn btn-outline-success">
-        Agregar categoria
+  <div class="container mt-4">
+    <h1 class="text-center">Lista de Categorías</h1>
+    <div class="d-flex justify-content-end mb-3">
+      <button
+        type="button"
+        class="btn btn-outline-success"
+        @click="agregarCategoria"
+      >
+        Agregar categoría
       </button>
     </div>
-    <br />
-    <div class="table-responsive">
-      <table class="table table-bordered table-hover table-striped text-center">
-        <thead class="table-dark">
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Descripcion</th>
-            <th scope="col">Editar</th>
-            <th scope="col">Eliminar</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>
-              <button type="button" class="btn btn-outline-warning">
-                Editar
-              </button>
-            </td>
-            <td>
-              <button type="button" class="btn btn-outline-danger">
-                Eliminar
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Descripción</th>
+          <th>Editar</th>
+          <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="categoria in categorias.data" :key="categoria.id">
+          <td>{{ categoria.id }}</td>
+          <td>{{ categoria.nombre }}</td>
+          <td>{{ categoria.descripcion }}</td>
+          <td>
+            <button type="button" class="btn btn-outline-warning">
+              Editar
+            </button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-outline-danger">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table><br><br>
   </div>
 </template>
 
 <script>
-import categoriaService from '../services/categoriaService'
+import axios from 'axios'
 
 export default {
   data() {
     return {
-      categorias: [],
-      form: { name: '' },
-      isEditing: false,
-      editingId: null,
+      categorias: {
+        data: [],
+      },
     }
   },
-  async created() {
-    await this.fetchCategorias()
-  },
   methods: {
-    async fetchCategorias() {
-      const response = await categoriaService.getCategorias()
-      this.categorias = response.data
-    },
-    async handleSubmit() {
-      if (this.isEditing) {
-        await categoriaService.updateCategoria(this.editingId, this.form)
-      } else {
-        await categoriaService.createCategoria(this.form)
+    async fetchCategorias(url = '/api/categorias') {
+      try {
+        const response = await axios.get(url)
+        this.categorias = response.data
+      } catch (error) {
+        console.error('Error al obtener categorías:', error)
       }
-      this.resetForm()
-      await this.fetchCategorias()
     },
-    editCategoria(categoria) {
-      this.form = { ...categoria }
-      this.editingId = categoria.id
-      this.isEditing = true
-    },
-    async deleteCategoria(id) {
-      await categoriaService.deleteCategoria(id)
-      await this.fetchCategorias()
-    },
-    resetForm() {
-      this.form = { name: '' }
-      this.isEditing = false
-      this.editingId = null
-    },
+  },
+  mounted() {
+    this.fetchCategorias()
   },
 }
 </script>
