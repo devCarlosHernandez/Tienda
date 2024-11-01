@@ -14,7 +14,7 @@ export default {
   name: 'AppDashboard',
   setup() {
     const authStore = useAuthStore()
-    const router = useRouter() // Usa el enrutador
+    const router = useRouter()
 
     const logout = () => {
       authStore.logout() // Llama al método logout del store
@@ -23,7 +23,7 @@ export default {
 
     return {
       user: authStore.user,
-      logout, // Asegúrate de devolver logout para que esté disponible en el template
+      logout,
     }
   },
 }

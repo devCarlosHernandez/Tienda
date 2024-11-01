@@ -46,19 +46,19 @@
 </template>
 
 <script>
-import { useAuthStore } from '../stores/authStore';
-import { ref } from 'vue';
-import { useRouter } from 'vue-router'; // Importa useRouter
+import { useAuthStore } from '../stores/authStore'
+import { ref } from 'vue'
+import { useRouter } from 'vue-router' 
 
 export default {
   setup() {
     // Cargar el store de autenticación
-    const authStore = useAuthStore();
-    const router = useRouter(); // Inicializa el enrutador
+    const authStore = useAuthStore()
+    const router = useRouter() // Inicializa el enrutador
 
     // Definir email y password usando ref para reactividad
-    const email = ref('');
-    const password = ref('');
+    const email = ref('')
+    const password = ref('')
 
     // Redefinir el método handleLogin para usar el store
     const handleLogin = async () => {
@@ -66,28 +66,27 @@ export default {
         await authStore.handleLogin({
           email: email.value,
           password: password.value,
-        });
+        })
 
         // Fetch the user information after successful login
-        await authStore.fetchUser(); // Llama a fetchUser() para obtener la información del usuario
+        await authStore.fetchUser() // Llama a fetchUser() para obtener la información del usuario
 
         // Redirigir después de iniciar sesión
         if (authStore.user) {
-          router.push('/dashboard'); // Redirigir al dashboard o página de inicio
+          router.push('/marcas') // Redirigir al dashboard o página de inicio
         }
       } catch (error) {
-        console.error('Login failed:', error);
-        // Aquí puedes agregar lógica para mostrar un mensaje de error al usuario
+        console.error('Login failed:', error)
       }
-    };
+    }
 
     return {
       email,
       password,
       handleLogin,
-    };
+    }
   },
-};
+}
 </script>
 
 <style>

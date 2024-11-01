@@ -2,6 +2,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import { useAuthStore } from '../stores/authStore'
 import AppDashboard from '../views/AppDashboard.vue' // Asegúrate de importar la vista AppDashboard
+import AppCategorias from '../views/AppCategorias.vue'
+import AppMarcas from '../views/AppMarcas.vue'
+import AppProveedores from '../views/AppProveedores.vue'
+import AppProductos from '../views/AppProductos.vue'
+import AppActivity from '../views/AppActivity.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,8 +23,33 @@ const router = createRouter({
     },
     {
       path: '/dashboard',
-      name: 'dashboard', // Agrega un nombre a esta ruta para facilitar la navegación
+      name: 'dashboard',
       component: AppDashboard,
+    },
+    {
+      path: '/marcas',
+      name: 'marcas',
+      component: AppMarcas,
+    },
+    {
+      path: '/categorias',
+      name: 'categorias',
+      component: AppCategorias,
+    },
+    {
+      path: '/productos',
+      name: 'productos',
+      component: AppProductos,
+    },
+    {
+      path: '/proveedores',
+      name: 'proveedores',
+      component: AppProveedores,
+    },
+    {
+      path: '/activity',
+      name: 'activity',
+      component: AppActivity,
     },
   ],
 })
@@ -33,11 +63,10 @@ router.beforeEach(async to => {
     return { name: 'login' }
   }
 
-   // Si el usuario está autenticado y está intentando acceder a la página de login, redirige al dashboard
-   if (authStore.user && to.name === 'login') {
-    return { name: 'dashboard' }; // Cambia esto según tus necesidades
+  // Si el usuario está autenticado y está intentando acceder a la página de login, redirige al dashboard
+  if (authStore.user && to.name === 'login') {
+    return { name: 'dashboard' }
   }
-
 })
 
 export default router
