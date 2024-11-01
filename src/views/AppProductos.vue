@@ -2,13 +2,9 @@
   <div class="container mt-4">
     <h1 class="text-center">Lista de Productos</h1>
     <div class="d-flex justify-content-end mb-3">
-      <button
-        type="button"
-        class="btn btn-outline-success"
-        @click="agregarProducto"
-      >
+      <router-link to="/agregar-producto" class="btn btn-outline-success">
         Agregar Producto
-      </button>
+      </router-link>
     </div>
     <table class="table table-striped">
       <thead>
@@ -63,6 +59,7 @@
     <br /><br />
   </div>
 </template>
+
 
 <script>
 import axios from 'axios'

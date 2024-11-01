@@ -16,7 +16,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="marca in marcas.data" :key="marca.id">
+        <tr v-for="marca in marcas" :key="marca.id">
           <td>{{ marca.id }}</td>
           <td>{{ marca.nombre }}</td>
           <td>
@@ -43,16 +43,14 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      marcas: {
-        data: [],
-      },
+      marcas: [], // Inicializa como un array vacío
     }
   },
   methods: {
     async fetchMarcas(url = '/api/marcas') {
       try {
         const response = await axios.get(url)
-        this.marcas = response.data
+        this.marcas = response.data // Asigna directamente la respuesta a 'marcas'
       } catch (error) {
         console.error('Error al obtener marcas:', error)
       }
@@ -67,7 +65,7 @@ export default {
     },
   },
   mounted() {
-    this.fetchMarcas()
+    this.fetchMarcas() // Carga las marcas al montar el componente
   },
 }
 </script>

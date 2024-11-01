@@ -8,6 +8,7 @@ import AgregarMarca from '../components/AgregarMarca.vue'
 import AppProveedores from '../views/AppProveedores.vue'
 import AgregarProveedor from '../components/AgregarProveedor.vue'
 import AppProductos from '../views/AppProductos.vue'
+import AgregarProducto from '../components/AgregarProducto.vue'
 import AppActivity from '../views/AppActivity.vue'
 import AgregarCategoria from '../components/AgregarCategoria.vue'
 
@@ -47,12 +48,17 @@ const router = createRouter({
     {
       path: '/agregar-categoria',
       name: 'agregar-categoria',
-      component: AgregarCategoria, // Ruta para agregar categoría
+      component: AgregarCategoria,
     },
     {
       path: '/productos',
       name: 'productos',
       component: AppProductos,
+    },
+    {
+      path: '/agregar-producto',
+      name: 'agregar-producto',
+      component: AgregarProducto,
     },
     {
       path: '/proveedores',
