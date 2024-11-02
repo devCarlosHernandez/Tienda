@@ -48,6 +48,7 @@
 
 <script>
 import axios from 'axios'
+import Swal from 'sweetalert2' // Importa SweetAlert2
 
 export default {
   data() {
@@ -68,13 +69,32 @@ export default {
     editarCategoria(id) {
       // Lógica para editar la categoría con el ID proporcionado
     },
-    // eslint-disable-next-line no-unused-vars
-    eliminarCategoria(id) {
-      // Lógica para eliminar la categoría con el ID proporcionado
+    async eliminarCategoria(id) {
+      const result = await Swal.fire({
+        title: '¿Estás seguro?',
+        text: '¡No podrás revertir esto!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+      });
+
+      if (result.isConfirmed) {
+        try {
+          await axios.delete(`/api/categorias/${id}`); // Realiza la eliminación
+          Swal.fire('Eliminado', 'La categoría ha sido eliminada.', 'success'); // Notificación de éxito
+          this.fetchCategorias(); // Actualiza la lista de categorías
+        } catch (error) {
+          console.error('Error al eliminar la categoría:', error);
+          Swal.fire('Error', 'Hubo un problema al eliminar la categoría.', 'error'); // Notificación de error
+        }
+      }
     },
   },
   mounted() {
-    this.fetchCategorias() // Carga las categorías al montar el componente
+    this.fetchCategorias(); // Carga las categorías al montar el componente
   },
 }
 </script>

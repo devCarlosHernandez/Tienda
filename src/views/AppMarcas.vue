@@ -20,25 +20,34 @@
           <td>{{ marca.id }}</td>
           <td>{{ marca.nombre }}</td>
           <td>
-            <button type="button" class="btn btn-outline-warning" @click="editarMarca(marca.id)">
+            <button
+              type="button"
+              class="btn btn-outline-warning"
+              @click="editarMarca(marca.id)"
+            >
               Editar
             </button>
           </td>
           <td>
-            <button type="button" class="btn btn-outline-danger" @click="eliminarMarca(marca.id)">
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              @click="eliminarMarca(marca.id)"
+            >
               Eliminar
             </button>
           </td>
         </tr>
       </tbody>
     </table>
-    <br>
-    <br>
+    <br />
+    <br />
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 export default {
   data() {
@@ -59,9 +68,33 @@ export default {
     editarMarca(id) {
       // Lógica para editar la marca con el ID proporcionado
     },
-    // eslint-disable-next-line no-unused-vars
-    eliminarMarca(id) {
-      // Lógica para eliminar la marca con el ID proporcionado
+    async eliminarMarca(id) {
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'No podrás revertir esto',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+      }).then(async result => {
+        if (result.isConfirmed) {
+          try {
+            const response = await axios.delete(`/api/marcas/${id}`)
+            Swal.fire('Eliminado', response.data.message, 'success')
+            this.fetchMarcas() // Actualiza la lista de marcas
+          } catch (error) {
+            console.error('Error al eliminar la marca:', error.response.data)
+            Swal.fire(
+              'Error',
+              error.response?.data?.message ||
+                'Hubo un problema al eliminar la marca.',
+              'error',
+            )
+          }
+        }
+      })
     },
   },
   mounted() {
