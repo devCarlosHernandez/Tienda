@@ -4,24 +4,67 @@
     <form @submit.prevent="guardarProducto">
       <div class="mb-3">
         <label for="nombre" class="form-label">Nombre del Producto</label>
-        <input type="text" class="form-control" id="nombre" v-model="producto.nombre" required />
+        <input
+          type="text"
+          class="form-control"
+          id="nombre"
+          v-model="producto.nombre"
+          required
+        />
       </div>
 
       <div class="mb-3">
         <label for="descripcion" class="form-label">Descripción</label>
-        <textarea class="form-control" id="descripcion" v-model="producto.descripcion" required></textarea>
+        <textarea
+          class="form-control"
+          id="descripcion"
+          v-model="producto.descripcion"
+          required
+        ></textarea>
       </div>
 
       <div class="mb-3">
         <label for="precio" class="form-label">Precio</label>
-        <input type="number" class="form-control" id="precio" v-model="producto.precio" required />
+        <input
+          type="number"
+          class="form-control"
+          id="precio"
+          v-model="producto.precio"
+          required
+        />
       </div>
 
       <div class="mb-3">
         <label for="marca_id" class="form-label">Marca</label>
-        <select class="form-select" id="marca_id" v-model="producto.marca_id" required>
+        <select
+          class="form-select"
+          id="marca_id"
+          v-model="producto.marca_id"
+          required
+        >
           <option value="" disabled>Selecciona una marca</option>
-          <option v-for="marca in marcas" :key="marca.id" :value="marca.id">{{ marca.nombre }}</option>
+          <option v-for="marca in marcas" :key="marca.id" :value="marca.id">
+            {{ marca.nombre }}
+          </option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="categoria_id" class="form-label">Categoría</label>
+        <select
+          class="form-select"
+          id="categoria_id"
+          v-model="producto.categoria_id"
+          required
+        >
+          <option value="" disabled>Selecciona una categoría</option>
+          <option
+            v-for="categoria in categorias"
+            :key="categoria.id"
+            :value="categoria.id"
+          >
+            {{ categoria.nombre }}
+          </option>
         </select>
       </div>
 
@@ -40,9 +83,11 @@ export default {
         nombre: '',
         descripcion: '',
         precio: '',
-        marca_id: ''
+        marca_id: '',
+        categoria_id: '',
       },
       marcas: [], // Array para almacenar las marcas
+      categorias: [], // Array para almacenar las categorías
     }
   },
   methods: {
@@ -54,6 +99,14 @@ export default {
         console.error('Error al obtener marcas:', error)
       }
     },
+    async fetchCategorias(url = '/api/categorias') {
+      try {
+        const response = await axios.get(url)
+        this.categorias = response.data // Asigna la respuesta a 'categorias'
+      } catch (error) {
+        console.error('Error al obtener categorías:', error)
+      }
+    },
     async guardarProducto() {
       try {
         // Enviar los datos del producto al backend
@@ -63,10 +116,11 @@ export default {
       } catch (error) {
         console.error('Error al guardar el producto:', error)
       }
-    }
+    },
   },
   mounted() {
     this.fetchMarcas() // Cargar marcas al montar el componente
+    this.fetchCategorias() // Cargar categorías al montar el componente
   },
 }
 </script>
