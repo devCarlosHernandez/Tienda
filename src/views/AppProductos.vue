@@ -60,9 +60,9 @@
   </div>
 </template>
 
-
 <script>
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 export default {
   data() {
@@ -88,9 +88,32 @@ export default {
     editarProducto(id) {
       // Lógica para editar el producto con el ID proporcionado
     },
-    // eslint-disable-next-line no-unused-vars
     eliminarProducto(id) {
-      // Lógica para eliminar el producto con el ID proporcionado
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'No podrás revertir esto',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+      }).then(async result => {
+        if (result.isConfirmed) {
+          try {
+            const response = await axios.delete(`/api/productos/${id}`)
+            Swal.fire('Eliminado', response.data.message, 'success')
+            this.fetchProductos() // Actualiza la lista de productos
+          } catch (error) {
+            console.error('Error al eliminar el producto:', error)
+            Swal.fire(
+              'Error',
+              'Hubo un problema al eliminar el producto.',
+              'error',
+            )
+          }
+        }
+      })
     },
   },
   mounted() {

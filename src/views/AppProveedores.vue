@@ -24,12 +24,20 @@
           <td>{{ proveedor.direccion }}</td>
           <td>{{ proveedor.telefono }}</td>
           <td>
-            <button type="button" class="btn btn-outline-warning" @click="editarProveedor(proveedor.id)">
+            <button
+              type="button"
+              class="btn btn-outline-warning"
+              @click="editarProveedor(proveedor.id)"
+            >
               Editar
             </button>
           </td>
           <td>
-            <button type="button" class="btn btn-outline-danger" @click="eliminarProveedor(proveedor.id)">
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              @click="eliminarProveedor(proveedor.id)"
+            >
               Eliminar
             </button>
           </td>
@@ -41,11 +49,12 @@
 
 <script>
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
 export default {
   data() {
     return {
-      proveedores: [], // Cambiado a array vacío
+      proveedores: [], // Inicializa como un array vacío
     }
   },
   methods: {
@@ -64,13 +73,40 @@ export default {
     editarProveedor(id) {
       // Lógica para editar el proveedor con el ID proporcionado
     },
-    // eslint-disable-next-line no-unused-vars
-    eliminarProveedor(id) {
-      // Lógica para eliminar el proveedor con el ID proporcionado
+    async eliminarProveedor(id) {
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'No podrás revertir esto',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+      }).then(async result => {
+        if (result.isConfirmed) {
+          try {
+            const response = await axios.delete(`/api/proveedores/${id}`)
+            Swal.fire(
+              'Eliminado',
+              response.data.message || 'Proveedor eliminado correctamente.',
+              'success',
+            )
+            this.fetchProveedores() // Actualiza la lista de proveedores
+          } catch (error) {
+            console.error('Error al eliminar el proveedor:', error)
+            Swal.fire(
+              'Error',
+              'Hubo un problema al eliminar el proveedor.',
+              'error',
+            )
+          }
+        }
+      })
     },
   },
   mounted() {
-    this.fetchProveedores()
+    this.fetchProveedores() // Carga los proveedores al montar el componente
   },
 }
 </script>
