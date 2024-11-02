@@ -65,8 +65,8 @@ export default {
       }
     },
     // eslint-disable-next-line no-unused-vars
-    editarMarca(id) {
-      // Lógica para editar la marca con el ID proporcionado
+        editarMarca(id) {
+        this.$router.push({ path: `/editar-marca/${id}` }); // Redirige al componente de edición con el ID
     },
     async eliminarMarca(id) {
       Swal.fire({

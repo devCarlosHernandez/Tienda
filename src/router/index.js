@@ -11,6 +11,7 @@ import AppProductos from '../views/AppProductos.vue'
 import AgregarProducto from '../components/AgregarProducto.vue'
 import AppActivity from '../views/AppActivity.vue'
 import AgregarCategoria from '../components/AgregarCategoria.vue'
+import EditarMarca from '@/components/EditarMarca.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,6 +41,8 @@ const router = createRouter({
       name: 'agregarMarca',
       component: AgregarMarca,
     },
+    { path: '/editar-marca/:id', component: EditarMarca, name: 'editar-marca' },
+
     {
       path: '/categorias',
       name: 'categorias',
