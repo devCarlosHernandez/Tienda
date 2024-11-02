@@ -68,8 +68,30 @@
         </select>
       </div>
 
-      <button type="submit" class="btn btn-primary">Guardar Producto</button>
+      <div class="mb-3">
+        <label class="form-label">Proveedores:</label>
+        <div
+          v-for="proveedor in proveedores"
+          :key="proveedor.id"
+          class="form-check"
+        >
+          <input
+            class="form-check-input"
+            type="checkbox"
+            :id="'proveedor_' + proveedor.id"
+            :value="proveedor.id"
+            v-model="producto.proveedor_id"
+          />
+          <label class="form-check-label" :for="'proveedor_' + proveedor.id">
+            {{ proveedor.nombre }}
+          </label>
+        </div>
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary">Guardar Producto</button>
+      </div>
     </form>
+    <br /><br />
   </div>
 </template>
 
@@ -85,42 +107,52 @@ export default {
         precio: '',
         marca_id: '',
         categoria_id: '',
+        proveedor_id: [],
       },
-      marcas: [], // Array para almacenar las marcas
-      categorias: [], // Array para almacenar las categorías
+      marcas: [],
+      categorias: [],
+      proveedores: [],
     }
   },
   methods: {
-    async fetchMarcas(url = '/api/marcas') {
+    async fetchMarcas() {
       try {
-        const response = await axios.get(url)
-        this.marcas = response.data // Asigna la respuesta a 'marcas'
+        const response = await axios.get('/api/marcas')
+        this.marcas = response.data
       } catch (error) {
         console.error('Error al obtener marcas:', error)
       }
     },
-    async fetchCategorias(url = '/api/categorias') {
+    async fetchCategorias() {
       try {
-        const response = await axios.get(url)
-        this.categorias = response.data // Asigna la respuesta a 'categorias'
+        const response = await axios.get('/api/categorias')
+        this.categorias = response.data
       } catch (error) {
         console.error('Error al obtener categorías:', error)
       }
     },
+    async fetchProveedores() {
+      try {
+        const response = await axios.get('/api/proveedores')
+        this.proveedores = response.data
+      } catch (error) {
+        console.error('Error al obtener proveedores:', error)
+      }
+    },
     async guardarProducto() {
       try {
-        // Enviar los datos del producto al backend
         const response = await axios.post('/api/productos', this.producto)
         console.log('Producto guardado:', response.data)
-        // Aquí puedes agregar lógica para manejar la respuesta después de guardar el producto
+        this.$router.push('/productos') // Redirigir a la lista de productos
       } catch (error) {
         console.error('Error al guardar el producto:', error)
       }
     },
   },
   mounted() {
-    this.fetchMarcas() // Cargar marcas al montar el componente
-    this.fetchCategorias() // Cargar categorías al montar el componente
+    this.fetchMarcas()
+    this.fetchCategorias()
+    this.fetchProveedores()
   },
 }
 </script>

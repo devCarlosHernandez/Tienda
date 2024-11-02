@@ -22,12 +22,20 @@
           <td>{{ categoria.nombre }}</td>
           <td>{{ categoria.descripcion }}</td>
           <td>
-            <button type="button" class="btn btn-outline-warning" @click="editarCategoria(categoria.id)">
+            <button
+              type="button"
+              class="btn btn-outline-warning"
+              @click="editarCategoria(categoria.id)"
+            >
               Editar
             </button>
           </td>
           <td>
-            <button type="button" class="btn btn-outline-danger" @click="eliminarCategoria(categoria.id)">
+            <button
+              type="button"
+              class="btn btn-outline-danger"
+              @click="eliminarCategoria(categoria.id)"
+            >
               Eliminar
             </button>
           </td>

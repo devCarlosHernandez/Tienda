@@ -18,26 +18,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="proveedor in proveedores.data" :key="proveedor.id">
+        <tr v-for="proveedor in proveedores" :key="proveedor.id">
           <td>{{ proveedor.id }}</td>
           <td>{{ proveedor.nombre }}</td>
           <td>{{ proveedor.direccion }}</td>
           <td>{{ proveedor.telefono }}</td>
           <td>
-            <button
-              type="button"
-              class="btn btn-outline-warning"
-              @click="editarProveedor(proveedor.id)"
-            >
+            <button type="button" class="btn btn-outline-warning" @click="editarProveedor(proveedor.id)">
               Editar
             </button>
           </td>
           <td>
-            <button
-              type="button"
-              class="btn btn-outline-danger"
-              @click="eliminarProveedor(proveedor.id)"
-            >
+            <button type="button" class="btn btn-outline-danger" @click="eliminarProveedor(proveedor.id)">
               Eliminar
             </button>
           </td>
@@ -53,22 +45,20 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      proveedores: {
-        data: [],
-      },
+      proveedores: [], // Cambiado a array vacío
     }
   },
   methods: {
     async fetchProveedores(url = '/api/proveedores') {
       try {
         const response = await axios.get(url)
-        this.proveedores = response.data
+        this.proveedores = response.data // Asigna la respuesta directamente a 'proveedores'
       } catch (error) {
         console.error('Error al obtener proveedores:', error)
       }
     },
     agregarProveedor() {
-      this.$router.push('/agregar-proveedor') // Redirigir al formulario de agregar proveedor
+      this.$router.push('/agregar-proveedor')
     },
     // eslint-disable-next-line no-unused-vars
     editarProveedor(id) {
