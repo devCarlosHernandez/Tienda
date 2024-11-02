@@ -25,7 +25,7 @@ import Swal from 'sweetalert2';
 export default {
   data() {
     return {
-      marca: { nombre: '' }, // Inicializa la marca con un campo de nombre
+      marca: { nombre: '' }, // Solo necesita el nombre
     };
   },
   methods: {
@@ -42,7 +42,7 @@ export default {
     async actualizarMarca() {
       const id = this.$route.params.id; // Obtener el ID desde la ruta
       try {
-        const response = await axios.put(`/api/marcas/${id}`, this.marca);
+        const response = await axios.put(`/api/marcas/${id}`, { nombre: this.marca.nombre }); // Solo envía el nombre
         Swal.fire('Actualizado', response.data.message, 'success');
         this.$router.push('/marcas'); // Redirige a la lista de marcas
       } catch (error) {
