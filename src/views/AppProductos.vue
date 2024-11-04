@@ -84,9 +84,9 @@ export default {
     agregarProducto() {
       // Lógica para agregar un nuevo producto
     },
-    // eslint-disable-next-line no-unused-vars
+
     editarProducto(id) {
-      // Lógica para editar el producto con el ID proporcionado
+      this.$router.push({ path: `/editar-producto/${id}` }) // Redirige al componente de edición con el ID
     },
     eliminarProducto(id) {
       Swal.fire({

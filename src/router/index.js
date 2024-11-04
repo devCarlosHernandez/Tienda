@@ -12,6 +12,9 @@ import AgregarProducto from '../components/AgregarProducto.vue'
 import AppActivity from '../views/AppActivity.vue'
 import AgregarCategoria from '../components/AgregarCategoria.vue'
 import EditarMarca from '@/components/EditarMarca.vue'
+import EditarCategoria from '@/components/EditarCategoria.vue'
+import EditarProveedor from '@/components/EditarProveedor.vue'
+import EditarProducto from '@/components/EditarProducto.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -41,8 +44,7 @@ const router = createRouter({
       name: 'agregarMarca',
       component: AgregarMarca,
     },
-    { path: '/editar-marca/:id', component: EditarMarca, name: 'editar-marca' },
-
+    { path: '/editar-marca/:id', name: 'editar-marca', component: EditarMarca },
     {
       path: '/categorias',
       name: 'categorias',
@@ -54,6 +56,12 @@ const router = createRouter({
       component: AgregarCategoria,
     },
     {
+      path: '/editar-categoria/:id', // Ruta con parámetro `id`
+      name: 'editar-categoria',
+      component: EditarCategoria, // Componente EditarCategoria.vue
+    },
+
+    {
       path: '/productos',
       name: 'productos',
       component: AppProductos,
@@ -64,6 +72,11 @@ const router = createRouter({
       component: AgregarProducto,
     },
     {
+      path: '/editar-producto/:id', // Ruta con parámetro `id`
+      name: 'editar-producto',
+      component: EditarProducto, // Componente EditarCategoria.vue
+    },
+    {
       path: '/proveedores',
       name: 'proveedores',
       component: AppProveedores,
@@ -72,6 +85,11 @@ const router = createRouter({
       path: '/agregar-proveedor',
       name: 'AgregarProveedor',
       component: AgregarProveedor,
+    },
+    {
+      path: '/editar-proveedor/:id',
+      name: 'editar-proveedor',
+      component: EditarProveedor,
     },
     {
       path: '/activity',

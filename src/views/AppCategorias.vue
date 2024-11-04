@@ -66,9 +66,10 @@ export default {
       }
     },
     // eslint-disable-next-line no-unused-vars
-    editarCategoria(id) {
-      // Lógica para editar la categoría con el ID proporcionado
+      editarCategoria(id) {
+      this.$router.push({ path: `/editar-categoria/${id}` }); // Redirige al componente de edición con el ID
     },
+
     async eliminarCategoria(id) {
       const result = await Swal.fire({
         title: '¿Estás seguro?',

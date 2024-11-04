@@ -29,34 +29,41 @@ export default {
     };
   },
   methods: {
-    async fetchMarca() {
-      const id = this.$route.params.id; // Obtener el ID desde la ruta
-      try {
-        const response = await axios.get(`/api/marcas/${id}`);
-        this.marca = response.data; // Asigna la respuesta a 'marca'
-      } catch (error) {
-        console.error('Error al obtener la marca:', error);
-        Swal.fire('Error', 'No se pudo cargar la marca.', 'error');
+      async fetchMarca() {
+        const id = this.$route.params.id; // Obtener el ID desde la ruta
+        try {
+          const response = await axios.get(`/api/marcas/${id}`);
+          this.marca = response.data; // Asigna la respuesta a 'marca'
+        } catch (error) {
+          console.error('Error al obtener la marca:', error);
+          Swal.fire('Error', 'No se pudo cargar la marca.', 'error');
+        }
+      },
+      async actualizarMarca() {
+        const id = this.$route.params.id; // Obtener el ID desde la ruta
+        try {
+          const response = await axios.put(`/api/marcas/${id}`, { nombre: this.marca.nombre });
+
+          // Verifica si el estado de respuesta es exitoso
+          if (response.status === 200) {
+            Swal.fire('Actualizado', response.data.message || 'La marca ha sido actualizada con éxito.', 'success');
+            this.$router.push('/marcas'); // Redirige a la lista de marcas
+          } else {
+            Swal.fire('Error', 'Hubo un problema al actualizar la marca.', 'error');
+          }
+        } catch (error) {
+          console.error('Error al actualizar la marca:', error);
+          const message = error.response?.data?.message || 'No se pudo actualizar la marca. Verifica los datos enviados.';
+          Swal.fire('Error', message, 'error');
+        }
       }
-    },
-    async actualizarMarca() {
-      const id = this.$route.params.id; // Obtener el ID desde la ruta
-      try {
-        const response = await axios.put(`/api/marcas/${id}`, { nombre: this.marca.nombre }); // Solo envía el nombre
-        Swal.fire('Actualizado', response.data.message, 'success');
-        this.$router.push('/marcas'); // Redirige a la lista de marcas
-      } catch (error) {
-        console.error('Error al actualizar la marca:', error);
-        const message = error.response?.data?.message || 'No se pudo actualizar la marca.';
-        Swal.fire('Error', message, 'error');
-      }
-    }
   },
   mounted() {
     this.fetchMarca(); // Carga la marca al montar el componente
   },
 };
 </script>
+
 
 <style scoped>
 /* Estilos personalizados si es necesario */

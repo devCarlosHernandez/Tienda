@@ -28,14 +28,15 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export default {
   data() {
     return {
       nombre: '',
       descripcion: '',
-    }
+    };
   },
   methods: {
     async submitForm() {
@@ -45,18 +46,33 @@ export default {
           descripcion: this.descripcion,
         });
 
-        // Redirige a la lista de categorías después de agregar
-        this.$router.push({ name: 'categorias' });
+        // Muestra una alerta de éxito con SweetAlert
+        Swal.fire({
+          title: 'Categoría Agregada',
+          text: 'La categoría se ha agregado correctamente.',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        }).then(() => {
+          // Redirige a la lista de categorías después de confirmar la alerta
+          this.$router.push({ name: 'categorias' });
+        });
       } catch (error) {
         console.error('Error al agregar categoría:', error);
-        // Aquí podrías mostrar un mensaje de error si lo deseas
+        // Mostrar un mensaje de error con SweetAlert
+        Swal.fire({
+          title: 'Error',
+          text: 'No se pudo agregar la categoría.',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
       }
     },
     cancelar() {
       this.$router.push({ name: 'categorias' }); // Redirigir a la lista si se cancela
-    }
-  }
-}
+    },
+  },
+};
+
 </script>
 
 <style scoped>

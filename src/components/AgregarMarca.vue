@@ -21,33 +21,49 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
+import Swal from 'sweetalert2';
 
 export default {
   data() {
     return {
       nombre: '',
-    }
+    };
   },
   methods: {
     async submitForm() {
       try {
         await axios.post('/api/marcas', {
           nombre: this.nombre,
-        })
+        });
 
-        // Redirige a la lista de marcas después de agregar
-        this.$router.push({ name: 'marcas' })
+        // Muestra una alerta de éxito con SweetAlert
+        Swal.fire({
+          title: 'Marca Agregada',
+          text: 'La marca se ha agregado correctamente.',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        }).then(() => {
+          // Redirige a la lista de marcas después de confirmar la alerta
+          this.$router.push({ name: 'marcas' });
+        });
       } catch (error) {
-        console.error('Error al agregar marca:', error)
-        // Aquí podrías mostrar un mensaje de error si lo deseas
+        console.error('Error al agregar marca:', error);
+        // Mostrar un mensaje de error con SweetAlert
+        Swal.fire({
+          title: 'Error',
+          text: 'No se pudo agregar la marca.',
+          icon: 'error',
+          confirmButtonText: 'OK',
+        });
       }
     },
     cancelar() {
-      this.$router.push({ name: 'marcas' }) // Redirigir a la lista si se cancela
+      this.$router.push({ name: 'marcas' }); // Redirigir a la lista si se cancela
     },
   },
-}
+};
+
 </script>
 
 <style scoped>

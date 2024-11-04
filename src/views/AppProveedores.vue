@@ -71,7 +71,7 @@ export default {
     },
     // eslint-disable-next-line no-unused-vars
     editarProveedor(id) {
-      // Lógica para editar el proveedor con el ID proporcionado
+      this.$router.push({ path: `/editar-proveedor/${id}` });
     },
     async eliminarProveedor(id) {
       Swal.fire({
