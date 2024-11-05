@@ -13,8 +13,8 @@ import AppActivity from '../views/AppActivity.vue'
 import AgregarCategoria from '../components/AgregarCategoria.vue'
 import EditarMarca from '@/components/EditarMarca.vue'
 import EditarCategoria from '@/components/EditarCategoria.vue'
-import EditarProveedor from '@/components/EditarProveedor.vue'
 import EditarProducto from '@/components/EditarProducto.vue'
+import EditarProveedores from '@/components/EditarProveedores.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -87,9 +87,9 @@ const router = createRouter({
       component: AgregarProveedor,
     },
     {
-      path: '/editar-proveedor/:id',
-      name: 'editar-proveedor',
-      component: EditarProveedor,
+      path: '/editar-proveedores/:id',
+      name: 'editar-proveedores',
+      component: EditarProveedores,
     },
     {
       path: '/activity',

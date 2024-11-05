@@ -27,7 +27,7 @@
             <button
               type="button"
               class="btn btn-outline-warning"
-              @click="editarProveedor(proveedor.id)"
+              @click="editarProveedores(proveedor.id)"
             >
               Editar
             </button>
@@ -61,17 +61,14 @@ export default {
     async fetchProveedores(url = '/api/proveedores') {
       try {
         const response = await axios.get(url)
-        this.proveedores = response.data // Asigna la respuesta directamente a 'proveedores'
+        this.proveedores = response.data
       } catch (error) {
         console.error('Error al obtener proveedores:', error)
       }
     },
-    agregarProveedor() {
-      this.$router.push('/agregar-proveedor')
-    },
-    // eslint-disable-next-line no-unused-vars
-    editarProveedor(id) {
-      this.$router.push({ path: `/editar-proveedor/${id}` });
+
+    editarProveedores(id) {
+      this.$router.push({ path: `/editar-proveedores/${id}` })
     },
     async eliminarProveedor(id) {
       Swal.fire({

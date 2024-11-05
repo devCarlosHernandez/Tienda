@@ -13,8 +13,8 @@
           <th>Nombre</th>
           <th>Descripción</th>
           <th>Precio</th>
-          <th>Marca ID</th>
-          <th>Categoría ID</th>
+          <th>Marca</th>
+          <th>Categoría</th>
           <th>Proveedor</th>
           <th>Editar</th>
           <th>Eliminar</th>
@@ -26,8 +26,8 @@
           <td>{{ producto.nombre }}</td>
           <td>{{ producto.descripcion }}</td>
           <td>{{ producto.precio }}</td>
-          <td>{{ producto.marca_id }}</td>
-          <td>{{ producto.categoria_id }}</td>
+          <td>{{ producto.marca.nombre }}</td>
+          <td>{{ producto.categoria.nombre }}</td>
           <td>
             <ul>
               <li v-for="proveedor in producto.proveedores" :key="proveedor.id">
@@ -77,14 +77,11 @@ export default {
       try {
         const response = await axios.get(url)
         this.productos = response.data
+        console.log('Productos obtenidos:', this.productos)
       } catch (error) {
         console.error('Error al obtener productos:', error)
       }
     },
-    agregarProducto() {
-      // Lógica para agregar un nuevo producto
-    },
-
     editarProducto(id) {
       this.$router.push({ path: `/editar-producto/${id}` }) // Redirige al componente de edición con el ID
     },
