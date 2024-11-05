@@ -65,10 +65,11 @@
           <input
             class="form-check-input"
             type="checkbox"
+            :id="'proveedor_' + proveedor.id"
             :value="proveedor.id"
-            v-model="producto.proveedor_ids"
+            v-model="producto.proveedor_id"
           />
-          <label class="form-check-label">
+          <label class="form-check-label" :for="'proveedor_' + proveedor.id">
             {{ proveedor.nombre }}
           </label>
         </div>
@@ -112,6 +113,7 @@ export default {
       try {
         const response = await axios.get(`/api/productos/${id}`)
         this.producto = response.data // Asigna la respuesta a 'producto'
+        console.log(this.producto)
       } catch (error) {
         console.error('Error al obtener el producto:', error)
         Swal.fire('Error', 'No se pudo cargar el producto.', 'error')
