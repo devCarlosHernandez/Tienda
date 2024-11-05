@@ -87,8 +87,12 @@
           </label>
         </div>
       </div>
+
       <div class="text-center">
         <button type="submit" class="btn btn-primary">Guardar Producto</button>
+        <router-link to="/productos" class="btn btn-outline-secondary ms-2"
+          >Cancelar</router-link
+        >
       </div>
     </form>
     <br /><br />

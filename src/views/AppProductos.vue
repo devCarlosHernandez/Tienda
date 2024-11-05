@@ -77,7 +77,6 @@ export default {
       try {
         const response = await axios.get(url)
         this.productos = response.data
-        console.log('Productos obtenidos:', this.productos)
       } catch (error) {
         console.error('Error al obtener productos:', error)
       }
